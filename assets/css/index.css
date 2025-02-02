@@ -1,0 +1,160 @@
+      /* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Estilo global com imagem de fundo */
+body {
+    background-image: url('img/pratos1.jpg'); /* Caminho da imagem */
+    background-size: cover; /* Cobrir toda a área */
+    background-position: center; /* Centralizar a imagem */
+    background-repeat: no-repeat; /* Evitar repetição */
+    background-attachment: fixed; /* Fixar o fundo ao rolar a página */
+    color: #fff; /* Texto branco para contraste */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    animation: fadeIn 0.8s ease-out;
+    position: relative; /* Adicionado para o overlay funcionar */
+}
+
+/* Overlay escuro para melhorar a legibilidade */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Overlay escuro */
+    z-index: -1; /* Colocar atrás do conteúdo */
+}
+
+/* Animação de entrada para o body */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Cabeçalho */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #6145db; /* Roxo moderno */
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.1rem;
+    color: #fdfbfb;
+}
+
+/* Animação de entrada para o header */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Seção de opções */
+.options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 40px 0;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.option-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.option-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.option-card h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.option-card p {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.option-card .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #6145db; /* Roxo moderno */
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.option-card .btn:hover {
+    background-color: #4a90e2; /* Azul moderno */
+    transform: scale(1.05);
+}
+
+/* Animação de entrada para as opções */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Rodapé */
+footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #f9f8f8;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+footer a {
+    color: #6145db;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+footer a:hover {
+    color: #4a90e2;
+}

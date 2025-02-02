@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../assets/css/grupos.css">
+</head>
+<header>
+    <div class="logo">GastroWish</div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="restaurantes.html">Restaurantes</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="grupos.html">Grupos</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </nav>
+</header>
+<body>
+    <h1>Meus Grupos</h1>
+    
+    <form id="form-grupo">
+        <input type="text" id="nome-grupo" placeholder="Nome do Grupo" required>
+        <textarea id="descricao-grupo" placeholder="Descrição do Grupo" required></textarea>
+        <button type="submit">Criar Grupo</button>
+    </form>
+    
+    <ul id="lista-grupos"></ul>
+    
+    <div id="detalhes-grupo" style="display:none;">
+        <h2 id="nome-detalhe"></h2>
+        <p id="descricao-detalhe"></p>
+        
+        <h3>Membros</h3>
+        <ul id="lista-membros"></ul>
+        <input type="text" id="novo-membro" placeholder="Email do amigo">
+        <button onclick="adicionarMembro()">Adicionar Membro</button>
+        
+        <h3>Restaurantes do Grupo</h3>
+        <ul id="lista-restaurantes-grupo"></ul>
+        <input type="text" id="nome-restaurante" placeholder="Nome do Restaurante">
+        <button onclick="adicionarRestauranteGrupo()">Adicionar Restaurante</button>
+        
+        <h3>Chat do Grupo</h3>
+        <div id="chat-box"></div>
+        <input type="text" id="mensagem-chat" placeholder="Digite sua mensagem">
+        <button onclick="enviarMensagem()">Enviar</button>
+        
+        <button onclick="sairDoGrupo()">Sair do Grupo</button>
+        <button onclick="voltarParaGrupos()">Voltar</button>
+    </div>
+    
+    <script src="grupos.js"></script>
+</body>
+</html>

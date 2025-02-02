@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Restaurantes</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../assets/css/restaurantes.css"> 
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">GastroWish</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="restaurantes.html">Restaurantes</a></li>
+                <li><a href="wishlist.html">Wishlist</a></li>
+                <li><a href="grupos.html">Grupos</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main>
+        <h1>Lista de Restaurantes</h1>
+
+        <form id="form-restaurante">
+            <label for="nome">Nome do Restaurante:</label>
+            <input type="text" id="nome" required>
+
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" required>
+
+            <label for="categoria">Categoria:</label>
+            <select id="categoria">
+                <option value="Açaí">Açaí</option>
+                <option value="Bebidas">Bebidas</option>
+                <option value="Brasileira">Brasileira</option>
+                <option value="Cafeteria">Cafeteria</option>
+                <option value="Carnes">Carnes</option>
+                <option value="Chinesa">Chinesa</option>
+                <option value="Contemporânea">Contemporânea</option>
+                <option value="Doces e Bolos">Doces e Bolos</option>
+                <option value="Francesa">Francesa</option>
+                <option value="Frutos do Mar">Frutos do Mar</option>
+                <option value="Hamburgueria">Hamburgueria</option>
+                <option value="Italiana">Italiana</option>
+                <option value="Japonesa">Japonesa</option>
+                <option value="Lanches">Lanches</option>
+                <option value="Mexicana">Mexicana</option>
+                <option value="Padaria">Padaria</option>
+                <option value="Pastel">Pastel</option>
+                <option value="Peixes">Peixes</option>
+                <option value="Pizza">Pizza</option>
+                <option value="Saudável">Saudável</option>
+                <option value="Sopas">Sopas</option>
+                <option value="Sorvete">Sorvete</option>
+                <option value="Tailandesa">Tailandesa</option>
+                <option value="Vegana e Vegetariana">Vegana e Vegetariana</option>
+                <option value="Yakisoba">Yakisoba</option>
+            </select>
+
+            <label for="tipo">Tipo de Serviço:</label>
+            <select id="tipo">
+                <option value="Rodízio">Rodízio</option>
+                <option value="À la carte">À la carte</option>
+                <option value="Marmita">Marmita</option>
+                <option value="Congelados">Congelados</option>
+            </select>
+
+            <button type="submit">Adicionar Restaurante</button>
+        </form>
+
+        <!-- Importação via Google Maps -->
+        <h2>Importar Restaurante do Google Maps</h2>
+        <input type="text" id="google-link" placeholder="Cole o link do Google Maps">
+        <button id="importar-btn">Importar</button>
+
+        <h2>Restaurantes Cadastrados</h2>
+        <ul id="lista-restaurantes"></ul>
+    </main>
+        </div>
+    </footer>
+
+    <script src="js/restaurantes.js"></script>
+</body>
+</html>
