@@ -16,6 +16,7 @@ document.getElementById('form-cadastro').addEventListener('submit', function(eve
         return;
     }
 
+    
     // Cria um novo usuário e adiciona ao localStorage
     const newUser = { username, email, password };
     users.push(newUser);
