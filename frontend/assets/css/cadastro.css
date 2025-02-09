@@ -1,158 +1,191 @@
-/* Reset básico */
+/* Reset e variáveis */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
 }
 
-/* Variáveis de cor */
 :root {
-    --primary-color: #7B2CBF;
-    --secondary-color: #9D4EDD;
-    --background-dark: #1E1E2F;
-    --text-color: #FFFFFF;
-    --input-bg: rgba(255, 255, 255, 0.1);
-    --input-border: rgba(255, 255, 255, 0.2);
-    --shadow: 0 4px 12px rgba(123, 44, 191, 0.15);
-    --radius: 12px;
+    --cor-principal: #2C3E50;
+    --cor-secundaria: #E74C3C;
+    --cor-destaque: #3498DB;
+    --cor-fundo: #ECF0F1;
+    --cor-texto: #34495E;
+    --animation-timing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Estilização do corpo */
 body {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('img/w1.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--cor-fundo);
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
     padding: 20px;
-    color: var(--text-color);
 }
 
-/* Header */
-header {
-    text-align: center;
-    padding: 20px;
-    animation: fadeInDown 0.8s ease-out;
+.background-stripe {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 400px;
+    height: 100%;
+    background-color: var(--cor-principal);
+    opacity: 0.8;
+    z-index: -1;
+    transform: skewX(-10deg) translateX(200px);
+    box-shadow: -10px 0 20px rgba(44, 62, 80, 0.2);
 }
 
-header h1 {
-    color: var(--text-color);
-    font-size: 2.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-/* Formulário de cadastro */
-#cadastro-form {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+.cadastro-container {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(44, 62, 80, 0.1);
     width: 100%;
     max-width: 400px;
-    text-align: center;
-    animation: fadeInUp 0.8s ease-out;
-    border: 1px solid var(--input-border);
+    animation: fadeIn 0.5s var(--animation-timing);
 }
 
-#form-cadastro {
+h1 {
+    color: var(--cor-principal);
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.input-group {
     display: flex;
     flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-#form-cadastro label {
-    text-align: left;
-    font-weight: 600;
-    margin-top: 15px;
-    color: var(--text-color);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-#form-cadastro input {
-    padding: 12px;
-    border: 1px solid var(--input-border);
-    border-radius: var(--radius);
-    margin-top: 5px;
-    font-size: 16px;
-    background: var(--input-bg);
-    color: var(--text-color);
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    padding: 15px;
+    border: 1px solid rgba(44, 62, 80, 0.1);
+    border-radius: 10px;
+    font-size: 0.95rem;
     transition: all 0.3s ease;
 }
 
-#form-cadastro input:focus {
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: var(--cor-destaque);
     outline: none;
-    transform: translateY(-2px);
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
 }
 
-#form-cadastro button {
-    margin-top: 20px;
-    padding: 12px;
-    background: var(--primary-color);
-    color: var(--text-color);
+.terms-group {
+    margin-bottom: 20px;
+}
+
+.terms-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    color: var(--cor-texto);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.terms-check input[type="checkbox"] {
+    margin-top: 3px;
+    accent-color: var(--cor-destaque);
+}
+
+.cadastro-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--cor-secundaria);
+    color: white;
     border: none;
-    border-radius: var(--radius);
-    font-size: 16px;
+    border-radius: 10px;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-#form-cadastro button:hover {
-    background: var(--secondary-color);
+.cadastro-btn:hover {
+    background: #d44232;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
 }
 
-/* Link para login */
-p {
-    margin-top: 15px;
-    font-size: 14px;
-    animation: fadeIn 0.8s ease-out;
-}
-
-p a {
-    color: var(--secondary-color);
-    text-decoration: none;
-    transition: all 0.3s ease;
-    font-weight: 600;
-}
-
-p a:hover {
-    color: var(--text-color);
-    text-shadow: 0 0 5px var(--secondary-color);
-}
-
-/* Rodapé */
-footer {
-    margin-top: 20px;
+.divider {
     text-align: center;
-    font-size: 14px;
-    color: var(--text-color);
-    animation: fadeInUp 0.8s ease-out;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    margin: 20px 0;
+    position: relative;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background-color: rgba(44, 62, 80, 0.1);
+}
+
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+.divider span {
+    background-color: white;
+    padding: 0 10px;
+    color: var(--cor-texto);
+    font-size: 0.9rem;
+}
+
+.google-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid rgba(44, 62, 80, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.google-btn i {
+    font-size: 1.2rem;
+    color: var(--cor-texto);
+}
+
+.google-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(44, 62, 80, 0.1);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--cor-texto);
+    font-size: 0.9rem;
+}
+
+.login-link a {
+    color: var(--cor-destaque);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+    color: var(--cor-secundaria);
 }
 
 /* Animações */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInUp {
+@keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -163,26 +196,46 @@ footer {
     }
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+/* Estilos para feedback de validação */
+.input-error {
+    border-color: var(--cor-secundaria) !important;
+}
+
+.error-message {
+    color: var(--cor-secundaria);
+    font-size: 0.8rem;
+    margin-top: 5px;
+    animation: fadeIn 0.3s ease;
 }
 
 /* Responsividade */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
+@media (max-width: 480px) {
+    .cadastro-container {
+        padding: 30px 20px;
     }
 
-    #cadastro-form {
-        padding: 20px;
+    h1 {
+        font-size: 1.5rem;
     }
 
-    header h1 {
-        font-size: 2rem;
+    .terms-check {
+        font-size: 0.8rem;
+    }
+}
+
+/* Efeito Ripple */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
     }
 }

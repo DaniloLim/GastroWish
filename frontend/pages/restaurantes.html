@@ -1,101 +1,154 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Restaurantes</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/restaurantes.css"> 
+    <title>Restaurantes - GastroWish</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/restaurantes.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="logo">GastroWish</div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="restaurantes.html">Restaurantes</a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="grupos.html">Grupos</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li id="logout-btn"><a href="#">Sair</a></li>
-            </ul>
+    <div class="background-stripe"></div>
+
+    <header class="main-header">
+        <div class="logo">
+            <h1>GastroWish</h1>
+        </div>
+        <nav class="main-nav">
+            <a href="#" class="active">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="grupos.html">
+                <i class="fas fa-users"></i>
+                <span>Grupos</span>
+            </a>
+            <a href="desejos.html">
+                <i class="fas fa-heart"></i>
+                <span>Lista de Desejos</span>
+            </a>
+            <a href="perfil.html">
+                <i class="fas fa-user"></i>
+                <span>Perfil</span>
+            </a>
+            <a href="login.html" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Sair</span>
+            </a>
         </nav>
     </header>
 
-    <!-- Conteúdo principal -->
-    <main>
-        <h1>Lista de Restaurantes</h1>
+    <main class="container">
+        <section class="search-section">
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar restaurantes..." id="search-input">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <button class="filter-toggle-btn">
+                <i class="fas fa-filter"></i>
+                <span>Filtros</span>
+            </button>
 
-        <form id="form-restaurante">
-            <label for="nome">Nome do Restaurante:</label>
-            <input type="text" id="nome" required>
-
-            <label for="endereco">Endereço:</label>
-            <input type="text" id="endereco" required>
-
-            <label for="categoria">Categoria:</label>
-            <select id="categoria">
-                <option value="Açaí">Açaí</option>
-                <option value="Bebidas">Bebidas</option>
-                <option value="Brasileira">Brasileira</option>
-                <option value="Cafeteria">Cafeteria</option>
-                <option value="Carnes">Carnes</option>
-                <option value="Chinesa">Chinesa</option>
-                <option value="Contemporânea">Contemporânea</option>
-                <option value="Doces e Bolos">Doces e Bolos</option>
-                <option value="Francesa">Francesa</option>
-                <option value="Frutos do Mar">Frutos do Mar</option>
-                <option value="Hamburgueria">Hamburgueria</option>
-                <option value="Italiana">Italiana</option>
-                <option value="Japonesa">Japonesa</option>
-                <option value="Lanches">Lanches</option>
-                <option value="Mexicana">Mexicana</option>
-                <option value="Padaria">Padaria</option>
-                <option value="Pastel">Pastel</option>
-                <option value="Peixes">Peixes</option>
-                <option value="Pizza">Pizza</option>
-                <option value="Saudável">Saudável</option>
-                <option value="Sopas">Sopas</option>
-                <option value="Sorvete">Sorvete</option>
-                <option value="Tailandesa">Tailandesa</option>
-                <option value="Vegana e Vegetariana">Vegana e Vegetariana</option>
-                <option value="Yakisoba">Yakisoba</option>
-            </select>
-
-            <label for="tipo">Tipo de Serviço:</label>
-            <select id="tipo">
-                <option value="Rodízio">Rodízio</option>
-                <option value="À la carte">À la carte</option>
-                <option value="Marmita">Marmita</option>
-                <option value="Congelados">Congelados</option>
-            </select>
-
-            <button type="submit">Adicionar Restaurante</button>
-        </form>
-
-        <!-- Importação via Google Maps -->
-        <h2>Importar Restaurante do Google Maps</h2>
-        <input type="text" id="google-link" placeholder="Cole o link do Google Maps">
-        <button id="importar-btn">Importar</button>
-
-        <h2>Restaurantes Cadastrados</h2>
-        <ul id="lista-restaurantes">
-            <!-- Exemplo de item - será gerado dinamicamente pelo JavaScript -->
-            <li>
-                <h3>Nome do Restaurante</h3>
-                <p>Endereço: Rua Exemplo, 123</p>
-                <div class="meta-info">
-                    <span>Categoria: Brasileira</span>
-                    <span>Tipo: À la carte</span>
+            <div class="filters-panel">
+                <div class="filter-group">
+                    <h3>Faixa de Preço</h3>
+                    <div class="price-range">
+                        <input type="checkbox" id="price-1" value="$">
+                        <label for="price-1">$</label>
+                        <input type="checkbox" id="price-2" value="$$">
+                        <label for="price-2">$$</label>
+                        <input type="checkbox" id="price-3" value="$$$">
+                        <label for="price-3">$$$</label>
+                        <input type="checkbox" id="price-4" value="$$$$">
+                        <label for="price-4">$$$$</label>
+                    </div>
                 </div>
-                <div class="actions">
-                    <button class="favorito-btn" title="Adicionar à wishlist">❤️ Favorito</button>
-                    <button class="remover-btn" title="Remover restaurante">🗑️ Remover</button>
-                </div>
-            </li>
-        </ul>    </main>
 
-    <script src="/assets/js/restaurantes.js"></script>
+                <div class="filter-group">
+                    <h3>Tipo de Comida</h3>
+                    <select id="cuisine-select" multiple>
+                        <option value="brasileira">Brasileira</option>
+                        <option value="japonesa">Japonesa</option>
+                        <option value="italiana">Italiana</option>
+                        <option value="mexicana">Mexicana</option>
+                        <option value="vegetariana">Vegetariana</option>
+                        <option value="arabe">Árabe</option>
+                        <option value="chinesa">Chinesa</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Serviço</h3>
+                    <select id="service-select">
+                        <option value="todos">Todos os serviços</option>
+                        <option value="a-la-carte">À la Carte</option>
+                        <option value="rodizio">Rodízio</option>
+                        <option value="self-service">Self Service</option>
+                        <option value="delivery">Delivery</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Distância</h3>
+                    <input type="range" min="1" max="20" value="5" class="distance-slider" id="distance-slider">
+                    <div class="distance-value">
+                        <span id="distance-display">5 km</span>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Delivery</h3>
+                    <label class="switch">
+                        <input type="checkbox" id="delivery-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Avaliação Mínima</h3>
+                    <div class="rating-select">
+                        <select id="rating-select">
+                            <option value="0">Todas as avaliações</option>
+                            <option value="3">3+ estrelas</option>
+                            <option value="4">4+ estrelas</option>
+                            <option value="4.5">4.5+ estrelas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Status</h3>
+                    <select id="status-select">
+                        <option value="todos">Todos</option>
+                        <option value="aberto">Aberto agora</option>
+                        <option value="fechado">Fechado</option>
+                    </select>
+                </div>
+
+                <button class="apply-filters-btn" id="apply-filters">
+                    Aplicar Filtros
+                </button>
+            </div>
+        </section>
+
+        <section class="restaurants-grid" id="restaurants-container">
+            <!-- Os cards de restaurantes serão inseridos aqui via JavaScript -->
+        </section>
+    </main>
+
+    <div id="notification" class="notification">
+        <span class="notification-message"></span>
+        <button class="notification-close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <script src="../assets/js/restaurantes.js"></script>
 </body>
 </html>

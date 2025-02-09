@@ -3,37 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Cadastro - GastroWish</title>
     <link rel="stylesheet" href="../assets/css/cadastro.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div id="header"></div>
-    <header>
-        <h1>Cadastro</h1>
-    </header>
+    <div class="background-stripe"></div>
 
-    <section id="cadastro-form">
+    <main class="cadastro-container">
+        <h1>Criar Conta</h1>
+        
         <form id="form-cadastro">
-            <label for="username">Nome de usuário:</label>
-            <input type="text" id="username" name="username" required>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Nome de usuário" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Senha" required>
+            </div>
 
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required>
+            <div class="terms-group">
+                <label class="terms-check">
+                    <input type="checkbox" id="terms" required>
+                    <span>Aceito os termos de uso e política de privacidade</span>
+                </label>
+            </div>
 
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" required>
+            <button type="submit" class="cadastro-btn">Criar conta</button>
+            
+            <div class="divider">
+                <span>ou</span>
+            </div>
 
-            <button type="submit">Cadastrar</button>
+            <button type="button" class="google-btn">
+                <i class="fab fa-google"></i>
+            </button>
+
+            <p class="login-link">
+                Já tem uma conta? <a href="login.html">Faça login</a>
+            </p>
         </form>
+    </main>
 
-        <p>Já tem uma conta? <a href="login.html">Faça login aqui</a></p>
-    </section>
-    <div id="footer.html"></div>
-    <footer>
-        <p>© 2025 Danilo Lima</p>
-    </footer>
-
-    <script src="js/cadastro.js" defer></script>
+    <script src="../assets/js/cadastro.js"></script>
 </body>
 </html>

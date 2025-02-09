@@ -4,32 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="../assets/css/login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>Login</h1>
-    </header>
+    <div class="background-stripe"></div>
 
-    <section id="login-form">
+    <main class="login-container">
+        <h1>Bem-vindo de volta!</h1>
+        
         <form id="form-login">
-            <label for="login-username">Nome de usuário:</label>
-            <input type="text" id="login-username" name="username" required>
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Senha" required>
+            </div>
 
-            <label for="login-password">Senha:</label>
-            <input type="password" id="login-password" name="password" required>
+            <div class="options-group">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <span>Lembrar-me</span>
+                </label>
+                <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            </div>
 
-            <button type="submit">Entrar</button>
+            <button type="submit" class="login-btn">Entrar</button>
+            
+            <div class="divider">
+                <span>ou</span>
+            </div>
+
+            <button type="button" class="google-btn">
+                <i class="fab fa-google"></i>
+            </button>
+
+            <p class="signup-link">
+                Não tem uma conta? <a href="cadastro.html">Cadastre-se</a>
+            </p>
         </form>
+    </main>
 
-        <p>Não tem uma conta? <a href="cadastro.html">Cadastre-se aqui</a></p>
-    </section>
-
-    <footer>
-        <p>© 2025 Danilo Lima</p>
-    </footer>
-
-    <script src="js/login.js" defer></script>
+    <script src="../assets/js/login.js"></script>
 </body>
 </html>

@@ -4,35 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GastroWish - Descubra e Avalie Restaurantes</title>
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>GastroWish</h1>
-        <p>Descubra, avalie e compartilhe suas experiências gastronômicas.</p>
+    <div class="page-loader">
+        <div class="loader-content">
+            <span>G</span>
+            <span>a</span>
+            <span>s</span>
+            <span>t</span>
+            <span>r</span>
+            <span>o</span>
+            <span>W</span>
+            <span>i</span>
+            <span>s</span>
+            <span>h</span>
+        </div>
+    </div>
+
+    <div class="background-stripe"></div>
+
+    <header class="fixed-header">
+        <nav>
+            <div class="nav-buttons">
+                <button class="btn login">Login</button>
+                <button class="btn cadastre-se">Cadastre-se</button>
+            </div>
+        </nav>
     </header>
 
-    <section class="options">
-        <div class="option-card">
-            <h2>Restaurantes</h2>
-            <p>Veja e adicione novos restaurantes.</p>
-            <a href="restaurantes.html" class="btn">Explorar</a>
+    <main>
+        <div class="content-wrapper">
+            <section class="hero-content">
+                <h1 class="reveal-text">GastroWish</h1>
+                <div class="proposta-box">
+                    <h2 class="reveal-text">Descubra e Avalie Restaurantes</h2>
+                    <p class="reveal-text">Aqui, você pode descobrir novos lugares, avaliar restaurantes de forma sincera e compartilhar suas experiências com amigos e outros amantes da gastronomia.
+                        Nosso objetivo é conectar pessoas a experiências gastronômicas inesquecíveis. Cada avaliação conta uma história, cada recomendação pode ser a chave para um novo favorito.</p>
+                </div>
+            </section>
+
+            <section class="carrossel-container">
+                <div class="carrossel">
+                    <button class="prev" aria-label="Anterior">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="carrossel-imagens">
+                        <img src="../assets/css/img/rest1.jpg" alt="Restaurante 1">
+                        <img src="../assets/css/img/rest2.jpg" alt="Restaurante 2">
+                        <img src="../assets/css/img/4.jpg" alt="Restaurante 3">
+                    </div>
+                    <button class="next" aria-label="Próximo">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </section>
         </div>
-        <div class="option-card">
-            <h2>Grupos</h2>
-            <p>Crie e participe de grupos gastronômicos.</p>
-            <a href="grupos.html" class="btn">Acessar</a>
-        </div>
-        <div class="option-card">
-            <h2>Lista de Desejos</h2>
-            <p>Marque restaurantes que deseja visitar.</p>
-            <a href="wishlist.html" class="btn">Ver Lista</a>
-        </div>
-    </section>
+    </main>
 
     <footer>
-        <p>&copy; 2025 GastroWish. Feito por <a href="#" target="_blank">Danilo Lima</a>.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <ul>
+                    <li>Email: contato@gastrowish.com</li>
+                    <li>Telefone: (11) 9999-9999</li>
+                    <li>Endereço: Av. Principal, 123</li>
+                </ul>
+            </div>
+    
+            <div class="footer-section">
+                <h3>Redes Sociais</h3>
+                <p>Siga-nos e fique por dentro das novidades!</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p>&copy; 2025 GastroWish. Todos os direitos reservados.</p>
+        </div>
     </footer>
+    <script src="../assets/js/index.js" defer></script>
 </body>
 </html>
