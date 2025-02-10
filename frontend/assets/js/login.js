@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             showMessage('Login realizado com sucesso!', false);
-            setTimeout(() => window.location.href = 'index.html', 1500);
+            setTimeout(() => window.location.href = 'restaurantes.html', 1500);
 
         } catch (error) {
             showMessage(error.message);

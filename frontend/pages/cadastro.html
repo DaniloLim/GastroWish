@@ -16,11 +16,16 @@
     <main class="cadastro-container">
         <h1>Criar Conta</h1>
         
-        <form id="form-cadastro">
+        <form id="form-cadastro" enctype="multipart/form-data">
             <div class="input-group">
                 <input type="text" id="username" placeholder="Nome de usuário" required>
                 <input type="email" id="email" placeholder="Email" required>
                 <input type="password" id="password" placeholder="Senha" required>
+                <!-- Novos campos -->
+                <input type="text" id="phone" placeholder="Telefone">
+                <input type="text" id="favorite_food" placeholder="Comida Favorita">
+                <input type="text" id="favorite_type" placeholder="Tipo Favorito">
+                <input type="file" id="profile_picture" accept="image/*">
             </div>
 
             <div class="terms-group">

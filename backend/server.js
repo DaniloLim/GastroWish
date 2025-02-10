@@ -3,17 +3,28 @@ const cors = require('cors');
 const path = require('path');
 const db = require('./database');
 const bcrypt = require('bcrypt');
-
+const multer = require('multer'); // novo
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Servir arquivos estáticos do frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
+// Configuração do multer para upload de imagens
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, 'uploads', 'profile_pictures'));
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + '-' + file.originalname);
+    }
+});
+const upload = multer({ storage });
 
+// Servir arquivos estáticos do frontend e uploads
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/assets', express.static(path.join(__dirname, '../frontend/assets')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use((req, res, next) => {
   if (req.url.endsWith('.css')) {
@@ -42,31 +53,41 @@ app.post('/restaurantes', (req, res) => {
   res.json({ id: result.lastInsertRowid });
 });
 
-// Rota de registro
-app.post('/api/register', async (req, res) => {
+// Rota de registro com upload
+app.post('/api/register', upload.single('profile_picture'), async (req, res) => {
   try {
-      const { name, email, password } = req.body;
+      const { name, email, password, phone, favorite_food, favorite_type } = req.body;
+      // Se o arquivo foi enviado, obtenha seu caminho
+      const profile_picture = req.file ? req.file.path : null;
 
-      // Verificar se o email já existe
       const existingUser = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
       if (existingUser) {
           return res.status(400).json({ error: 'Email já cadastrado' });
       }
 
-      // Hash da senha
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Inserir novo usuário
       const stmt = db.prepare(`
           INSERT INTO users (
               name,
               email,
               password_hash,
+              phone,
+              favorite_food,
+              favorite_type,
+              profile_picture,
               created_at
-          ) VALUES (?, ?, ?, datetime('now'))
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))
       `);
-
-      const result = stmt.run(name, email, hashedPassword);
+      const result = stmt.run(
+          name,
+          email,
+          hashedPassword,
+          phone || null,
+          favorite_food || null,
+          favorite_type || null,
+          profile_picture || null
+      );
 
       res.status(201).json({
           message: 'Usuário cadastrado com sucesso',

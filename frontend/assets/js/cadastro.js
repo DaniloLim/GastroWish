@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const nameInput = document.getElementById('username');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
+    // Novos campos
+    const phoneInput = document.getElementById('phone');
+    const favoriteFoodInput = document.getElementById('favorite_food');
+    const favoriteTypeInput = document.getElementById('favorite_type');
+    const profilePictureInput = document.getElementById('profile_picture');
 
     // Função para mostrar mensagens
     function showMessage(message, isError = true) {
@@ -41,12 +46,12 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Função principal de cadastro
-    async function handleRegistration(userData) {
+    async function handleRegistration(formData) {
         try {
             const response = await fetch(`${API_URL}/register`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(userData)
+                // fetch will set multipart/form-data automatically with FormData
+                body: formData
             });
 
             const data = await response.json();
@@ -68,6 +73,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const name = nameInput.value.trim();
         const email = emailInput.value.trim();
         const password = passwordInput.value;
+        // Captura dos novos campos
+        const phone = phoneInput.value.trim();
+        const favorite_food = favoriteFoodInput.value.trim();
+        const favorite_type = favoriteTypeInput.value.trim();
 
         // Validar todos os campos
         const nameValidation = validations.name(name);
@@ -89,7 +98,19 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        await handleRegistration({ name, email, password });
+        // Build FormData including file if provided
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('phone', phone);
+        formData.append('favorite_food', favorite_food);
+        formData.append('favorite_type', favorite_type);
+        if (profilePictureInput.files[0]) {
+            formData.append('profile_picture', profilePictureInput.files[0]);
+        }
+
+        await handleRegistration(formData);
     });
 
     // Validações em tempo real
