@@ -156,6 +156,71 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// Rota de atualização de perfil com upload
+app.put('/api/profile', upload.single('profile_picture'), async (req, res) => {
+    try {
+        const { id, name, email, password, phone, favorite_food, favorite_type } = req.body;
+        if (!id) {
+            return res.status(400).json({ error: "User id is required" });
+        }
+        const user = db.prepare('SELECT * FROM users WHERE id = ?').get(id);
+        if (!user) {
+            return res.status(404).json({ error: "Usuário não encontrado" });
+        }
+
+        let newPasswordHash = user.password_hash;
+        if (password) {
+            newPasswordHash = await bcrypt.hash(password, 10);
+        }
+        
+        const newProfilePicture = req.file ? req.file.path : user.profile_picture;
+
+        const stmt = db.prepare(`
+            UPDATE users SET 
+                name = ?, 
+                email = ?, 
+                password_hash = ?, 
+                phone = ?, 
+                favorite_food = ?, 
+                favorite_type = ?, 
+                profile_picture = ?
+            WHERE id = ?
+        `);
+        stmt.run(
+            name,
+            email,
+            newPasswordHash,
+            phone || null,
+            favorite_food || null,
+            favorite_type || null,
+            newProfilePicture,
+            id
+        );
+        const updatedUser = db.prepare(`
+            SELECT id, name, email, phone, favorite_food, favorite_type, profile_picture, created_at 
+            FROM users WHERE id = ?
+        `).get(id);
+        res.json(updatedUser);
+    } catch (error) {
+        console.error("Erro ao atualizar o perfil:", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    }
+});
+
+// New GET route to fetch user profile by id
+app.get('/api/profile/:id', (req, res) => {
+    const { id } = req.params;
+    const user = db.prepare(`
+        SELECT id, name, email, phone, favorite_food, favorite_type, profile_picture, created_at 
+        FROM users 
+        WHERE id = ?
+    `).get(id);
+    if (!user) {
+        return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+    res.json(user);
+});
+
 app.get('/restaurantes', (req, res) => {
   const restaurantes = db.prepare('SELECT * FROM restaurantes').all();
   res.json(restaurantes);

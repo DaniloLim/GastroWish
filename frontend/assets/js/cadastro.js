@@ -4,11 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const nameInput = document.getElementById('username');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
-    // Novos campos
-    const phoneInput = document.getElementById('phone');
-    const favoriteFoodInput = document.getElementById('favorite_food');
-    const favoriteTypeInput = document.getElementById('favorite_type');
-    const profilePictureInput = document.getElementById('profile_picture');
+    const favoriteFoodInput = document.getElementById('favorite_food'); // may be null if id mismatch
+    const favoriteTypeInput = document.getElementById('favorite_type'); // may be null if id mismatch
 
     // Função para mostrar mensagens
     function showMessage(message, isError = true) {
@@ -73,12 +70,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const name = nameInput.value.trim();
         const email = emailInput.value.trim();
         const password = passwordInput.value;
-        // Captura dos novos campos
-        const phone = phoneInput.value.trim();
-        const favorite_food = favoriteFoodInput.value.trim();
-        const favorite_type = favoriteTypeInput.value.trim();
+        const favorite_food = favoriteFoodInput ? favoriteFoodInput.value.trim() : '';
+        const favorite_type = favoriteTypeInput ? favoriteTypeInput.value.trim() : '';
 
-        // Validar todos os campos
+        // Validar campos essenciais
         const nameValidation = validations.name(name);
         const emailValidation = validations.email(email);
         const passwordValidation = validations.password(password);
@@ -98,17 +93,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Build FormData including file if provided
+        // Build FormData with only existing fields
         const formData = new FormData();
         formData.append('name', name);
         formData.append('email', email);
         formData.append('password', password);
-        formData.append('phone', phone);
         formData.append('favorite_food', favorite_food);
         formData.append('favorite_type', favorite_type);
-        if (profilePictureInput.files[0]) {
-            formData.append('profile_picture', profilePictureInput.files[0]);
-        }
 
         await handleRegistration(formData);
     });
