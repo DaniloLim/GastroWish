@@ -1,193 +1,92 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const API_URL = 'http://localhost:3000/api';
     const form = document.getElementById('form-login');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const loginButton = document.querySelector('.login-btn');
-    const googleButton = document.querySelector('.google-btn');
+    const emailInput = document.getElementById('email'); // ID correto do seu HTML
+    const passwordInput = document.getElementById('password'); // ID correto do seu HTML
+    const loginButton = document.querySelector('button[type="submit"]');
     const rememberCheckbox = document.getElementById('remember');
 
-    // Verificar se existem credenciais salvas
-    checkSavedCredentials();
+    // Função para mostrar mensagens
+    function showMessage(message, isError = true) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isError ? 'error' : 'success'}`;
+        messageDiv.textContent = message;
+        messageDiv.style.cssText = `
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            background-color: ${isError ? '#ef4444' : '#10b981'};
+        `;
+        
+        form.insertBefore(messageDiv, form.firstChild);
+        
+        setTimeout(() => messageDiv.remove(), 3000);
+    }
 
-    // Validação de email em tempo real
-    emailInput.addEventListener('input', function() {
-        validateEmail(this);
-    });
+    // Função de loading
+    function setLoading(isLoading) {
+        loginButton.disabled = isLoading;
+        loginButton.innerHTML = isLoading ? 
+            '<i class="fas fa-circle-notch fa-spin"></i> Entrando...' : 
+            'Entrar';
+    }
 
-    // Mostrar força da senha em tempo real
-    passwordInput.addEventListener('input', function() {
-        validatePassword(this);
-    });
+    // Função principal de login
+    async function handleLogin(email, password) {
+        try {
+            setLoading(true);
 
-    // Manipular envio do formulário
-    form.addEventListener('submit', function(e) {
+            const response = await fetch(`${API_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) throw new Error(data.error);
+
+            localStorage.setItem('userData', JSON.stringify({
+                id: data.id,
+                name: data.name,
+                email: data.email
+            }));
+
+            if (rememberCheckbox?.checked) {
+                localStorage.setItem('savedEmail', email);
+            }
+
+            showMessage('Login realizado com sucesso!', false);
+            setTimeout(() => window.location.href = 'index.html', 1500);
+
+        } catch (error) {
+            showMessage(error.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    // Event Listeners
+    form?.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
-        if (validateForm()) {
-            handleLogin();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        if (!email || !password) {
+            showMessage('Preencha todos os campos');
+            return;
         }
+
+        await handleLogin(email, password);
     });
 
-    // Login com Google
-    googleButton.addEventListener('click', handleGoogleLogin);
-
-    // Funções de validação
-    function validateEmail(input) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const isValid = emailRegex.test(input.value);
-        
-        if (!isValid) {
-            input.style.borderColor = '#e74c3c';
-        } else {
-            input.style.borderColor = '#2ecc71';
-        }
-        
-        return isValid;
+    // Carregar email salvo
+    const savedEmail = localStorage.getItem('savedEmail');
+    if (savedEmail && emailInput && rememberCheckbox) {
+        emailInput.value = savedEmail;
+        rememberCheckbox.checked = true;
     }
-
-    function validatePassword(input) {
-        const isValid = input.value.length >= 6;
-        
-        if (!isValid) {
-            input.style.borderColor = '#e74c3c';
-        } else {
-            input.style.borderColor = '#2ecc71';
-        }
-        
-        return isValid;
-    }
-
-    function validateForm() {
-        const isEmailValid = validateEmail(emailInput);
-        const isPasswordValid = validatePassword(passwordInput);
-        
-        return isEmailValid && isPasswordValid;
-    }
-
-    // Funções de manipulação de login
-    function handleLogin() {
-        // Mostrar estado de loading
-        loginButton.disabled = true;
-        const originalText = loginButton.textContent;
-        loginButton.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Entrando...';
-
-        // Salvar credenciais se "Lembrar-me" estiver marcado
-        if (rememberCheckbox.checked) {
-            saveCredentials();
-        } else {
-            clearSavedCredentials();
-        }
-
-        // Simular requisição de login
-        setTimeout(() => {
-            // Aqui você adicionaria sua lógica real de autenticação
-            const mockSuccessfulLogin = true;
-
-            if (mockSuccessfulLogin) {
-                showSuccess();
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1000);
-            } else {
-                showError('Credenciais inválidas');
-                loginButton.disabled = false;
-                loginButton.textContent = originalText;
-            }
-        }, 1500);
-    }
-
-    function handleGoogleLogin() {
-        // Adicionar efeito de loading
-        googleButton.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
-        googleButton.disabled = true;
-
-        // Simular login com Google
-        setTimeout(() => {
-            // Aqui você adicionaria sua lógica real de autenticação com Google
-            window.location.href = 'index.html';
-        }, 1500);
-    }
-
-    // Funções para lidar com credenciais salvas
-    function saveCredentials() {
-        const credentials = {
-            email: emailInput.value,
-            remember: true
-        };
-        localStorage.setItem('loginCredentials', JSON.stringify(credentials));
-    }
-
-    function clearSavedCredentials() {
-        localStorage.removeItem('loginCredentials');
-    }
-
-    function checkSavedCredentials() {
-        const saved = localStorage.getItem('loginCredentials');
-        if (saved) {
-            const credentials = JSON.parse(saved);
-            emailInput.value = credentials.email;
-            rememberCheckbox.checked = credentials.remember;
-        }
-    }
-
-    // Funções de feedback visual
-    function showSuccess() {
-        loginButton.style.backgroundColor = '#2ecc71';
-        loginButton.innerHTML = '<i class="fas fa-check"></i> Sucesso!';
-    }
-
-    function showError(message) {
-        // Criar e mostrar mensagem de erro
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'error-message';
-        errorDiv.textContent = message;
-        errorDiv.style.color = '#e74c3c';
-        errorDiv.style.fontSize = '0.9rem';
-        errorDiv.style.marginTop = '10px';
-        errorDiv.style.textAlign = 'center';
-        
-        // Remover mensagem de erro anterior se existir
-        const existingError = form.querySelector('.error-message');
-        if (existingError) {
-            existingError.remove();
-        }
-        
-        form.appendChild(errorDiv);
-
-        // Remover mensagem após 3 segundos
-        setTimeout(() => {
-            errorDiv.remove();
-        }, 3000);
-    }
-
-    // Prevenir envio do formulário ao pressionar Enter
-    document.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            if (validateForm()) {
-                handleLogin();
-            }
-        }
-    });
-
-    // Adicionar efeito de ripple aos botões
-    const buttons = document.querySelectorAll('button');
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            const ripple = document.createElement('span');
-            ripple.classList.add('ripple');
-            this.appendChild(ripple);
-            
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size/2;
-            const y = e.clientY - rect.top - size/2;
-            
-            ripple.style.width = ripple.style.height = `${size}px`;
-            ripple.style.left = `${x}px`;
-            ripple.style.top = `${y}px`;
-            
-            setTimeout(() => ripple.remove(), 600);
-        });
-    });
 });

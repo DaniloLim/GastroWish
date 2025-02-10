@@ -1,154 +1,104 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const API_URL = 'http://localhost:3000/api';
     const form = document.getElementById('form-cadastro');
-    const usernameInput = document.getElementById('username');
+    const nameInput = document.getElementById('username');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
-    const termsCheckbox = document.getElementById('terms');
-    const cadastroButton = document.querySelector('.cadastro-btn');
-    const googleButton = document.querySelector('.google-btn');
 
-    // Validação de username em tempo real
-    usernameInput.addEventListener('input', function() {
-        validateUsername(this);
-    });
+    // Função para mostrar mensagens
+    function showMessage(message, isError = true) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isError ? 'error' : 'success'}`;
+        messageDiv.textContent = message;
+        messageDiv.style.cssText = `
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            background-color: ${isError ? '#ef4444' : '#10b981'};
+        `;
+        
+        form.insertBefore(messageDiv, form.firstChild);
+        
+        setTimeout(() => messageDiv.remove(), 3000);
+    }
 
-    // Validação de email em tempo real
-    emailInput.addEventListener('input', function() {
-        validateEmail(this);
-    });
+    // Validações
+    const validations = {
+        name: (value) => {
+            const isValid = value.length >= 3 && /^[a-zA-ZÀ-ÿ\s]+$/.test(value);
+            return { isValid, message: 'Nome deve ter pelo menos 3 letras e apenas caracteres alfabéticos' };
+        },
+        email: (value) => {
+            const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+            return { isValid, message: 'Email inválido' };
+        },
+        password: (value) => {
+            const isValid = value.length >= 6;
+            return { isValid, message: 'Senha deve ter pelo menos 6 caracteres' };
+        }
+    };
 
-    // Validação de senha em tempo real
-    passwordInput.addEventListener('input', function() {
-        validatePassword(this);
-    });
+    // Função principal de cadastro
+    async function handleRegistration(userData) {
+        try {
+            const response = await fetch(`${API_URL}/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData)
+            });
 
-    // Manipular envio do formulário
-    form.addEventListener('submit', function(e) {
+            const data = await response.json();
+
+            if (!response.ok) throw new Error(data.error);
+
+            showMessage('Cadastro realizado com sucesso!', false);
+            setTimeout(() => window.location.href = 'login.html', 1500);
+
+        } catch (error) {
+            showMessage(error.message);
+        }
+    }
+
+    // Event Listeners
+    form?.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
-        if (validateForm()) {
-            handleCadastro();
+
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        // Validar todos os campos
+        const nameValidation = validations.name(name);
+        const emailValidation = validations.email(email);
+        const passwordValidation = validations.password(password);
+
+        if (!nameValidation.isValid) {
+            showMessage(nameValidation.message);
+            return;
         }
+
+        if (!emailValidation.isValid) {
+            showMessage(emailValidation.message);
+            return;
+        }
+
+        if (!passwordValidation.isValid) {
+            showMessage(passwordValidation.message);
+            return;
+        }
+
+        await handleRegistration({ name, email, password });
     });
 
-    // Cadastro com Google
-    googleButton.addEventListener('click', handleGoogleCadastro);
-
-    // Funções de validação
-    function validateUsername(input) {
-        const isValid = input.value.length >= 3;
-        updateFieldStatus(input, isValid);
-        return isValid;
-    }
-
-    function validateEmail(input) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const isValid = emailRegex.test(input.value);
-        updateFieldStatus(input, isValid);
-        return isValid;
-    }
-
-    function validatePassword(input) {
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-        const isValid = passwordRegex.test(input.value);
-        updateFieldStatus(input, isValid);
-        return isValid;
-    }
-
-    function updateFieldStatus(input, isValid) {
-        if (!isValid) {
-            input.style.borderColor = '#e74c3c';
-        } else {
-            input.style.borderColor = '#2ecc71';
+    // Validações em tempo real
+    [nameInput, emailInput, passwordInput].forEach(input => {
+        if (input) {
+            input.addEventListener('input', function() {
+                const validation = validations[this.id](this.value);
+                this.style.borderColor = this.value && !validation.isValid ? '#ef4444' : '';
+            });
         }
-    }
-
-    function validateForm() {
-        const isUsernameValid = validateUsername(usernameInput);
-        const isEmailValid = validateEmail(emailInput);
-        const isPasswordValid = validatePassword(passwordInput);
-        const isTermsAccepted = termsCheckbox.checked;
-
-        if (!isTermsAccepted) {
-            showError('Por favor, aceite os termos de uso');
-        }
-
-        return isUsernameValid && isEmailValid && isPasswordValid && isTermsAccepted;
-    }
-
-    // Funções de manipulação de cadastro
-    function handleCadastro() {
-        cadastroButton.disabled = true;
-        const originalText = cadastroButton.textContent;
-        cadastroButton.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Cadastrando...';
-
-        // Simular requisição de cadastro
-        setTimeout(() => {
-            const mockSuccessfulCadastro = true;
-
-            if (mockSuccessfulCadastro) {
-                showSuccess();
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1000);
-            } else {
-                showError('Erro ao cadastrar. Tente novamente.');
-                cadastroButton.disabled = false;
-                cadastroButton.textContent = originalText;
-            }
-        }, 1500);
-    }
-
-    function handleGoogleCadastro() {
-        googleButton.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
-        googleButton.disabled = true;
-
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 1500);
-    }
-
-    // Funções de feedback visual
-    function showSuccess() {
-        cadastroButton.style.backgroundColor = '#2ecc71';
-        cadastroButton.innerHTML = '<i class="fas fa-check"></i> Sucesso!';
-    }
-
-    function showError(message) {
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'error-message';
-        errorDiv.textContent = message;
-        
-        const existingError = form.querySelector('.error-message');
-        if (existingError) {
-            existingError.remove();
-        }
-        
-        form.appendChild(errorDiv);
-
-        setTimeout(() => {
-            errorDiv.remove();
-        }, 3000);
-    }
-
-    // Efeito Ripple nos botões
-    const buttons = document.querySelectorAll('button');
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            const ripple = document.createElement('span');
-            ripple.classList.add('ripple');
-            this.appendChild(ripple);
-            
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size/2;
-            const y = e.clientY - rect.top - size/2;
-            
-            ripple.style.width = ripple.style.height = `${size}px`;
-            ripple.style.left = `${x}px`;
-            ripple.style.top = `${y}px`;
-            
-            setTimeout(() => ripple.remove(), 600);
-        });
     });
 });
