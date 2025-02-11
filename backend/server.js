@@ -1,7 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const db = require('./database');
+// Previously: const db = require('./database.js');
+// New direct instantiation:
+const Database = require('better-sqlite3');
+const db = new Database(path.join(__dirname, 'database.db'));
+
 const bcrypt = require('bcrypt');
 const multer = require('multer'); // novo
 
