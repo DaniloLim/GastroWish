@@ -1,26 +1,51 @@
-.profile-container {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+body {
+    background-color: #ECF0F1;
+    font-family: 'Inter', sans-serif;
 }
+
+/* Background stripe similar to login page */
+.background-stripe {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 400px;
+    height: 100%;
+    background-color: #2C3E50;
+    opacity: 0.8;
+    z-index: -1;
+    transform: skewX(-10deg) translateX(200px);
+    box-shadow: -10px 0 20px rgba(44, 62, 80, 0.2);
+}
+
+/* Updated container styling based on login page */
+.profile-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 40px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(44, 62, 80, 0.1);
+}
+
 .profile-container h1 {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 30px;
     color: #2C3E50;
 }
+
+/* Form groups */
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     display: flex;
     flex-direction: column;
 }
+
 .form-group label {
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: #34495E;
 }
+
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"],
@@ -30,21 +55,32 @@
     border-radius: 8px;
     transition: border-color 0.3s;
 }
+
 .form-group input:focus {
     border-color: #3498DB;
     outline: none;
 }
+
+/* Submit button */
 button[type="submit"] {
     width: 100%;
-    padding: 0.8rem;
+    padding: 15px;
     background-color: #10b981;
     border: none;
     color: #fff;
     font-size: 1rem;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 button[type="submit"]:hover {
     background-color: #0d9488;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .profile-container {
+        padding: 30px 20px;
+    }
 }
