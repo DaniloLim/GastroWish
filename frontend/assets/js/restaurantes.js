@@ -308,6 +308,54 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Profile Dropdown Functionality
+    const profileTrigger = document.querySelector('.profile-trigger');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+    const userInfo = JSON.parse(localStorage.getItem('userData')) || {};
+    const profileImage = document.querySelector('.profile-image');
+    
+    // Update profile info and image
+    if (userInfo.id) {  // Changed from userInfo.name to userInfo.id
+        document.querySelector('.profile-name').textContent = userInfo.name || 'Usuário';
+        
+        // Fetch user profile data including profile picture
+        fetch(`/api/profile/${userInfo.id}`)
+            .then(response => response.json())
+            .then(userData => {
+                if (userData.profile_picture) {
+                    // Remove the file:// prefix if present and adjust the path
+                    const picturePath = userData.profile_picture.replace('\\', '/').split('backend/')[1];
+                    profileImage.src = `/${picturePath}`;
+                    
+                    // Handle image loading error
+                    profileImage.onerror = () => {
+                        console.log('Failed to load profile picture, falling back to default');
+                        profileImage.src = '/assets/css/img/default-avatar.jpg';
+                    };
+                } else {
+                    console.log('No profile picture found, using default');
+                    profileImage.src = '/assets/css/img/default-avatar.jpg';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching user data:', error);
+                profileImage.src = '/assets/css/img/default-avatar.jpg';
+            });
+    }
+
+    // Toggle dropdown
+    profileTrigger?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('active');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.profile-dropdown')) {
+            dropdownMenu?.classList.remove('active');
+        }
+    });
+
     // Inicializar a aplicação
     init();
 });
