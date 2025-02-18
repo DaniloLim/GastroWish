@@ -4,9 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil - GastroWish</title>
+    <!-- Added Font Awesome similar to restaurantes.html -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/perfil.css">
 </head>
 <body>
+    <!-- Replicated header -->
+    <header class="main-header">
+        <div class="logo">
+            <h1>GastroWish</h1>
+        </div>
+        <nav class="main-nav">
+            <a href="restaurantes.html">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="grupos.html">
+                <i class="fas fa-users"></i>
+                <span>Grupos</span>
+            </a>
+            <a href="desejos.html">
+                <i class="fas fa-heart"></i>
+                <span>Lista de Desejos</span>
+            </a>
+            <a href="perfil.html" class="active">
+                <i class="fas fa-user"></i>
+                <span>Perfil</span>
+            </a>
+            <a href="login.html" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Sair</span>
+            </a>
+        </nav>
+    </header>
     <!-- Added background stripe as in login page -->
     <div class="background-stripe"></div>
     <main class="profile-container">

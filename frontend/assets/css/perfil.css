@@ -1,6 +1,102 @@
+:root {
+    --cor-principal: #2C3E50;
+    --cor-secundaria: #E74C3C;
+    --cor-destaque: #3498DB;
+    --cor-fundo: #ECF0F1;
+    --cor-texto: #34495E;
+    --cor-sucesso: #2ECC71;
+    --cor-branco: #ffffff;
+    --sombra-suave: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --sombra-media: 0 8px 15px rgba(0, 0, 0, 0.1);
+    --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --borda-radius: 16px;
+}
+
+.main-header {
+    background: var(--cor-branco);
+    padding: 1.2rem 2.5rem; /* Match restaurantes.css padding */
+    height: 80px; /* Add fixed height to match restaurantes.css */
+    width: 100vw; /* Change to viewport width */
+    margin-left: calc(-50vw + 50%); /* Center the header */
+    margin-right: calc(-50vw + 50%); /* Center the header */
+    box-shadow: var(--sombra-suave);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-sizing: border-box; /* Add this to include padding in width calculation */
+}
+
+.logo {
+    flex-shrink: 0; /* Prevent logo from shrinking */
+}
+
+.logo h1 {
+    background: linear-gradient(135deg, #2C3E50, #E74C3C); /* var(--cor-principal), var(--cor-secundaria) */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.main-nav {
+    display: flex;
+    gap: 1rem; /* Reduced gap */
+    align-items: center;
+    margin-left: 2rem;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    max-width: calc(100% - 200px); /* Reserve space for logo */
+    overflow-x: auto; /* Allow horizontal scroll if needed */
+    -ms-overflow-style: none; /* Hide scrollbar IE and Edge */
+    scrollbar-width: none; /* Hide scrollbar Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.main-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.main-nav a {
+    color: #34495E; /* var(--cor-texto) */
+    text-decoration: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* var(--transicao) */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Fix logout button positioning */
+.logout-btn {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/* Adjust logout button positioning */
+.main-nav .logout-btn {
+    position: relative; /* Reset any absolute positioning */
+    margin-left: 1rem; /* Add some space from other items */
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    background: #E74C3C; /* var(--cor-secundaria) */
+    color: #ffffff; /* var(--cor-branco) */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* var(--sombra-suave) */
+}
+
 body {
     background-color: #ECF0F1;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden; /* Added to remove lateral scroll */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
 }
 
 /* Background stripe similar to login page */
@@ -82,5 +178,16 @@ button[type="submit"]:hover {
 @media (max-width: 480px) {
     .profile-container {
         padding: 30px 20px;
+    }
+}
+
+/* Add responsive adjustments */
+@media (max-width: 768px) {
+    .main-nav span {
+        display: none; /* Hide text labels on mobile */
+    }
+    
+    .main-nav a {
+        padding: 0.8rem;
     }
 }
