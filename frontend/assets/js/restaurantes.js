@@ -356,6 +356,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Add this near the profile dropdown functionality
+    const logoutButton = document.querySelector('a[href="login.html"]');
+    
+    logoutButton?.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Clear all authentication data
+        localStorage.removeItem('userData');
+        localStorage.removeItem('savedEmail');
+        
+        // Redirect to login page
+        window.location.href = 'login.html';
+    });
+
     // Inicializar a aplicação
     init();
 });
