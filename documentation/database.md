@@ -1,85 +1,161 @@
-// Tabela de Usuários (Versão Simplificada)
+// A more complete social media schema for GastroWish
+
 Table users {
-id int [pk, increment]
-google_id varchar [unique]
-name varchar [not null]
-email varchar [not null, unique]
-password_hash varchar
-phone varchar
-favorite_food varchar
-favorite_type varchar
-profile_picture varchar
-created_at timestamp 
-last_login timestamp
+    id INTEGER [primary key, increment]
+    google_id TEXT [unique]
+    username TEXT [unique, not null]
+    name TEXT [not null]
+    email TEXT [not null, unique]
+    password_hash TEXT
+    phone TEXT
+    bio TEXT
+    location TEXT
+    website TEXT
+    favorite_food TEXT[]
+    favorite_cuisines TEXT[]
+    dietary_preferences TEXT[]
+    profile_picture TEXT
+    cover_photo TEXT
+    is_verified BOOLEAN [default: false]
+    is_private BOOLEAN [default: false]
+    created_at TIMESTAMP [default: `NOW()`]
+    last_login TIMESTAMP
 }
 
-// Tabela de Grupos (Essencial)
-Table groups {
-id int [pk, increment]
-name varchar [not null]
-description text
-created_by int [ref: > users.id]
-created_at timestamp 
-cover_photo varchar
+Table friendships {
+    id INTEGER [primary key, increment]
+    requester_id INTEGER [ref: > users.id]
+    addressee_id INTEGER [ref: > users.id]
+    status TEXT [note: 'pending, accepted, blocked']
+    created_at TIMESTAMP [default: `NOW()`]
+    updated_at TIMESTAMP
 }
 
-// Tabela de Membros dos Grupos
-Table group_members {
-id int [pk, increment]
-group_id int [ref: > groups.id]
-user_id int [ref: > users.id]
-role enum('admin', 'member') [default: 'member']
-joined_at timestamp
+Table messages {
+    id INTEGER [primary key, increment]
+    sender_id INTEGER [ref: > users.id]
+    receiver_id INTEGER [ref: > users.id]
+    content TEXT
+    is_read BOOLEAN [default: false]
+    created_at TIMESTAMP [default: `NOW()`]
+    deleted_at TIMESTAMP
 }
 
-// Tabela de Restaurantes (Foco nas Informações Chave)
 Table restaurants {
-id int [pk, increment]
-name varchar [not null]
-address varchar [not null]
-category varchar [note: 'Ex: Brasileira, Japonesa']
-service_type varchar [note: 'Ex: Rodízio, À la carte']
-price_range enum('$', '$$', '$$$', '$$$$')
-delivery_available boolean [default: false]
-opening_hours varchar
-latitude decimal(9,6)
-longitude decimal(9,6)
-created_by int [ref: > users.id]
-created_at timestamp 
+    id INTEGER [primary key, increment]
+    name TEXT [not null]
+    description TEXT
+    address TEXT [not null]
+    category TEXT[]
+    cuisine_type TEXT[]
+    service_type TEXT[]
+    price_range TEXT
+    website TEXT
+    phone TEXT
+    delivery_available BOOLEAN [default: false]
+    opening_hours JSON
+    photos TEXT[]
+    menu_photos TEXT[]
+    latitude REAL
+    longitude REAL
+    verified_at TIMESTAMP
+    created_by INTEGER [ref: > users.id]
+    created_at TIMESTAMP [default: `NOW()`]
+    updated_at TIMESTAMP
 }
 
-// Tabela de Avaliações (Simplificada)
 Table reviews {
-id int [pk, increment]
-restaurant_id int [ref: > restaurants.id]
-user_id int [ref: > users.id]
-rating decimal(2,1) [note: '0.0 a 5.0']
-comment text
-visit_date date
-created_at timestamp 
+    id INTEGER [primary key, increment]
+    restaurant_id INTEGER [ref: > restaurants.id]
+    user_id INTEGER [ref: > users.id]
+    rating REAL
+    food_rating REAL
+    service_rating REAL
+    ambience_rating REAL
+    price_rating REAL
+    title TEXT
+    content TEXT
+    photos TEXT[]
+    visit_date DATE
+    created_at TIMESTAMP [default: `NOW()`]
+    updated_at TIMESTAMP
 }
 
-// Tabela de Fotos (Essencial)
-Table photos {
-id int [pk, increment]
-review_id int [ref: > reviews.id]
-photo_url varchar [not null]
-created_at timestamp 
+Table posts {
+    id INTEGER [primary key, increment]
+    user_id INTEGER [ref: > users.id]
+    restaurant_id INTEGER [ref: > restaurants.id, null]
+    content TEXT
+    photos TEXT[]
+    location TEXT
+    tags TEXT[]
+    created_at TIMESTAMP [default: `NOW()`]
+    updated_at TIMESTAMP
 }
 
-// Wishlist Grupal (Versão Minimalista)
-Table group_wishlist {
-id int [pk, increment]
-group_id int [ref: > groups.id]
-restaurant_id int [ref: > restaurants.id]
-added_by int [ref: > users.id]
-created_at timestamp 
+Table comments {
+    id INTEGER [primary key, increment]
+    post_id INTEGER [ref: > posts.id]
+    user_id INTEGER [ref: > users.id]
+    parent_comment_id INTEGER [ref: > comments.id, null]
+    content TEXT
+    created_at TIMESTAMP [default: `NOW()`]
+    updated_at TIMESTAMP
 }
 
-// Wishlist Pessoal (Simplificada)
-Table personal_wishlist {
-id int [pk, increment]
-user_id int [ref: > users.id]
-restaurant_id int [ref: > restaurants.id]
-created_at timestamp 
+Table reactions {
+    id INTEGER [primary key, increment]
+    user_id INTEGER [ref: > users.id]
+    target_type TEXT [note: 'post, comment, review']
+    target_id INTEGER
+    reaction_type TEXT [note: 'like, love, helpful, etc']
+    created_at TIMESTAMP [default: `NOW()`]
+}
+
+Table collections {
+    id INTEGER [primary key, increment]
+    user_id INTEGER [ref: > users.id]
+    name TEXT
+    description TEXT
+    is_private BOOLEAN [default: false]
+    created_at TIMESTAMP [default: `NOW()`]
+    updated_at TIMESTAMP
+}
+
+Table collection_items {
+    id INTEGER [primary key, increment]
+    collection_id INTEGER [ref: > collections.id]
+    restaurant_id INTEGER [ref: > restaurants.id]
+    notes TEXT
+    added_at TIMESTAMP [default: `NOW()`]
+}
+
+Table notifications {
+    id INTEGER [primary key, increment]
+    user_id INTEGER [ref: > users.id]
+    type TEXT
+    content TEXT
+    related_id INTEGER
+    is_read BOOLEAN [default: false]
+    created_at TIMESTAMP [default: `NOW()`]
+}
+
+Table user_achievements {
+    id INTEGER [primary key, increment]
+    user_id INTEGER [ref: > users.id]
+    achievement_type TEXT
+    level INTEGER
+    earned_at TIMESTAMP [default: `NOW()`]
+}
+
+Table hashtags {
+    id INTEGER [primary key, increment]
+    name TEXT [unique]
+    post_count INTEGER [default: 0]
+}
+
+Table post_hashtags {
+    id INTEGER [primary key, increment]
+    post_id INTEGER [ref: > posts.id]
+    hashtag_id INTEGER [ref: > hashtags.id]
 }
